@@ -1,0 +1,78 @@
+import logging import time from datetime import datetime from telegram import Update from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+Simple in-memory user database
+
+users = {} TOKEN_RATE = 1  # 1 LUI coin per 60 seconds TOKEN_INTERVAL = 60
+
+logging.basicConfig(level=logging.INFO)
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = updateimport logging import time from datetime import datetime from telegram import Update from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+Simple in-memory user database
+
+users = {} TOKEN_RATE = 1  # 1 LUI coin per 60 seconds TOKEN_INTERVAL = 60
+
+logging.basicConfig(level=logging.INFO)
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = update.effective_user.id username = update.effective_user.username or "NoUsername" if user_id not in users: users[user_id] = { "username": username, "start_time": time.time(), "last_mined": time.time(), "balance": 0, "referrals": [], } if context.args: ref_id = int(context.args[0]) if ref_id != user_id and ref_id in users: users[ref_id]["referrals"].append(user_id) users[ref_id]["balance"] += 5  # referral bonus await update.message.reply_text(f"Welcome to LUI Coin Mining, {username}! You are now mining LUI Coin.") else: await update.message.reply_text("You are already mining LUI Coin!")
+
+async def balance(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = update.effective_user.id user = users.get(user_id) if not user: await update.message.reply_text("Please use /start to begin mining.") return now = time.time() mined = int((now - user['last_mined']) / TOKEN_INTERVAL) * TOKEN_RATE user['balance'] += mined user['last_mined'] = now await update.message.reply_text(f"Your current balance: {user['balance']} LUI Coin\nReferrals: {len(user['referrals'])}")
+
+async def withdraw(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = update.effective_user.id user = users.get(user_id) if not user: await update.message.reply_text("Please use /start to begin mining.") return if user['balance'] < 50: await update.message.reply_text("You need at least 50 LUI Coin to withdraw.") else: await update.message.reply_text("Withdrawal request received. You will be notified when LUI Coin launches.")
+
+async def referral(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = update.effective_user.id bot_username = (await context.bot.get_me()).username await update.message.reply_text( f"Share this link to invite friends and earn 5 LUI Coin per referral:\n" f"https://t.me/{bot_username}?start={user_id}" )
+
+if name == 'main': app = ApplicationBuilder().token("YOUR_BOT_TOKEN_HERE").build()
+
+app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("balance", balance))
+app.add_handler(CommandHandler("withdraw", withdraw))
+app.add_handler(CommandHandler("referral", referral))
+
+print("Bot is running...")
+app.run_polling()
+
+import logging import time from datetime import datetime from telegram import Update from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+Simple in-memory user database
+
+users = {} TOKEN_RATE = 1  # 1 LUI coin per 60 seconds TOKEN_INTERVAL = 60
+
+logging.basicConfig(level=logging.INFO)
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = update.effective_user.id username = update.effective_user.username or "NoUsername" if user_id not in users: users[user_id] = { "username": username, "start_time": time.time(), "last_mined": time.time(), "balance": 0, "referrals": [], } if context.args: ref_id = int(context.args[0]) if ref_id != user_id and ref_id in users: users[ref_id]["referrals"].append(user_id) users[ref_id]["balance"] += 5  # referral bonus await update.message.reply_text(f"Welcome to LUI Coin Mining, {username}! You are now mining LUI Coin.") else: await update.message.reply_text("You are already mining LUI Coin!")
+
+async def balance(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = update.effective_user.id user = users.get(user_id) if not user: await update.message.reply_text("Please use /start to begin mining.") return now = time.time() mined = int((now - user['last_mined']) / TOKEN_INTERVAL) * TOKEN_RATE user['balance'] += mined user['last_mined'] = now await update.message.reply_text(f"Your current balance: {user['balance']} LUI Coin\nReferrals: {len(user['referrals'])}")
+
+async def withdraw(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = update.effective_user.id user = users.get(user_id) if not user: await update.message.reply_text("Please use /start to begin mining.") return if user['balance'] < 50: await update.message.reply_text("You need at least 50 LUI Coin to withdraw.") else: await update.message.reply_text("Withdrawal request received. You will be notified when LUI Coin launches.")
+
+async def referral(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = update.effective_user.id bot_username = (await context.bot.get_me()).username await update.message.reply_text( f"Share this link to invite friends and earn 5 LUI Coin per referral:\n" f"https://t.me/{bot_username}?start={user_id}" )
+
+if name == 'main': app = ApplicationBuilder().token("YOUR_BOT_TOKEN_HERE").build()
+
+app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("balance", balance))
+app.add_handler(CommandHandler("withdraw", withdraw))
+app.add_handler(CommandHandler("referral", referral))
+
+print("Bot is running...")
+app.run_polling()
+
+.effective_user.id username = update.effective_user.username or "NoUsername" if user_id not in users: users[user_id] = { "username": username, "start_time": time.time(), "last_mined": time.time(), "balance": 0, "referrals": [], } if context.args: ref_id = int(context.args[0]) if ref_id != user_id and ref_id in users: users[ref_id]["referrals"].append(user_id) users[ref_id]["balance"] += 5  # referral bonus await update.message.reply_text(f"Welcome to LUI Coin Mining, {username}! You are now mining LUI Coin.") else: await update.message.reply_text("You are already mining LUI Coin!")
+
+async def balance(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = update.effective_user.id user = users.get(user_id) if not user: await update.message.reply_text("Please use /start to begin mining.") return now = time.time() mined = int((now - user['last_mined']) / TOKEN_INTERVAL) * TOKEN_RATE user['balance'] += mined user['last_mined'] = now await update.message.reply_text(f"Your current balance: {user['balance']} LUI Coin\nReferrals: {len(user['referrals'])}")
+
+async def withdraw(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = update.effective_user.id user = users.get(user_id) if not user: await update.message.reply_text("Please use /start to begin mining.") return if user['balance'] < 50: await update.message.reply_text("You need at least 50 LUI Coin to withdraw.") else: await update.message.reply_text("Withdrawal request received. You will be notified when LUI Coin launches.")
+
+async def referral(update: Update, context: ContextTypes.DEFAULT_TYPE): user_id = update.effective_user.id bot_username = (await context.bot.get_me()).username await update.message.reply_text( f"Share this link to invite friends and earn 5 LUI Coin per referral:\n" f"https://t.me/{bot_username}?start={user_id}" )
+
+if name == 'main': app = ApplicationBuilder().token("YOUR_BOT_TOKEN_HERE").build()
+
+app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("balance", balance))
+app.add_handler(CommandHandler("withdraw", withdraw))
+app.add_handler(CommandHandler("referral", referral))
+
+print("Bot is running...")
+app.run_polling()
+
